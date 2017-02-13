@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SimpleJSON;
 using System.Net;
+using System.Collections.Specialized;
 
 namespace TelegramBotFirstApp
 {
@@ -32,9 +33,34 @@ namespace TelegramBotFirstApp
                         e.name = r["message"]["from"]["first_name"];
                         e.message = r["message"]["text"];
                         e.chatID = r["message"]["chat"]["id"];
+                        if (e.message == "/time")
+                        {
+                            GetTime();
+                        }
                     }
                 }
                 ResponseReceived(e);
+            }
+        }
+        //test class
+        public void GetTime()
+        {
+            using (WebClient web = new WebClient())
+            {
+                NameValueCollection coll = new NameValueCollection();
+                string date = "Time: " +  DateTime.Now.ToLongTimeString();
+                coll.Add("chat_id", e.chatID.ToString());
+                coll.Add("text", date);
+                web.UploadValues(LINK + _token + "/sendMessage", coll);
+            }
+        }
+        public void SendMessage(string text) {
+            using (WebClient web = new WebClient())
+            {
+                NameValueCollection collection = new NameValueCollection();
+                collection.Add("chat_id", e.chatID.ToString());
+                collection.Add("text", text);
+                web.UploadValues(LINK + _token + "/sendMessage", collection);
             }
         }
     }
