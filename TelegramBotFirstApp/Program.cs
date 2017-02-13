@@ -12,4 +12,8 @@ namespace TelegramBotFirstApp
         {
         }
     }
+    class Telegram
+    {
+
+    }
 }
