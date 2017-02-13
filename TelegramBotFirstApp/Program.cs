@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace TelegramBotFirstApp
 {
-    public delegate void Response(object sendrer, ParameterResponse e); // Delegate response
+    public delegate void Response(ParameterResponse e); // Delegate response
     class Program
     {
         static void Main(string[] args)
@@ -19,16 +19,10 @@ namespace TelegramBotFirstApp
             Thread th = new Thread(Tr.GetUpdates);
             Tr.GetUpdates();
         }
-        private static void Tr_ResponseReceived(object sendrer, ParameterResponse e)
+        private static void Tr_ResponseReceived(ParameterResponse e)
         {
             Console.WriteLine("{0} {1}: {2}   chatID:{3}", e.name, e.FirstName, e.message, e.chatID);
         }
     }
-    public class ParameterResponse : EventArgs
-    {
-        public string name;
-        public string FirstName;
-        public string message;
-        public string chatID;
-    }  
+    
 }

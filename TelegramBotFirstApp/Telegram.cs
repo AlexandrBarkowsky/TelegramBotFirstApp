@@ -34,8 +34,15 @@ namespace TelegramBotFirstApp
                         e.chatID = r["message"]["chat"]["id"];
                     }
                 }
-                ResponseReceived(this, e);
+                ResponseReceived(e);
             }
         }
+    }
+    public class ParameterResponse
+    {
+        public string name;
+        public string FirstName;
+        public string message;
+        public string chatID;
     }
 }
