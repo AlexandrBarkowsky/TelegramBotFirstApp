@@ -12,8 +12,8 @@ namespace TelegramBotFirstApp
     class Telegram
     {
         int LastUpdateID = 0;
-        private string _token = "275547698:AAFqRX-HIAy-z62gSEQMZYHRvE28TM_vBEw";
-        private string LINK = "https://api.telegram.org/bot";
+        private static string _token = "275547698:AAFqRX-HIAy-z62gSEQMZYHRvE28TM_vBEw";
+        private static string LINK = "https://api.telegram.org/bot";
         public event Response ResponseReceived; // событие для ответа
         ParameterResponse e = new ParameterResponse();
         public void GetUpdates()
