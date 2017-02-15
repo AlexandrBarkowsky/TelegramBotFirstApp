@@ -14,18 +14,29 @@ namespace TelegramBotFirstApp
         static string LINK = "https://translate.yandex.net/api/v1.5/tr.json/translate?lang=ru-en&key=" + key;
         public string GetResult(string text)
         {
-            using (WebClient web = new WebClient()) {
-                string URIresponse = LINK + "&text=" + text;
-                string response = web.DownloadString(URIresponse);
-                var n = JSON.Parse(response);
-                int val = Int32.Parse(n["code"].Value);
-                if(val == 200)
+            try
+            {
+                string result = "";
+                using (WebClient web = new WebClient())
                 {
-                    Console.WriteLine("Error");
-                }
-                Console.WriteLine(val);
+                    string URIresponse = LINK + "&text=" + text;
+                    string response = web.DownloadString(URIresponse);
+                    var n = JSON.Parse(response);
+                    int val = n["code"].AsInt;
+                    result = n["text"][0].Value;
+                    if (val != 200)
+                    {
+                        throw new Exception("Что то случилось я YandexAPI");
+                    }
+                    Console.WriteLine(val);
+                    return result;
+                } 
             }
-            return "good";
+            catch (Exception e)
+            {
+                Console.WriteLine("Ошибка: " + e.Message);
+                return "";
+            }
         }
     }
 }

@@ -16,6 +16,8 @@ namespace TelegramBotFirstApp
         private static string LINK = "https://api.telegram.org/bot";
         public event Response ResponseReceived; // событие для ответа
         ParameterResponse e = new ParameterResponse();
+        public YandexAPI a = new YandexAPI();
+        
         public void GetUpdates()
         {
             while (true)
@@ -37,6 +39,7 @@ namespace TelegramBotFirstApp
                         {
                             GetTime();
                         }
+                        else { SendMessage(e.message); }
                     }
                 }
                 ResponseReceived(e);
@@ -55,6 +58,7 @@ namespace TelegramBotFirstApp
             }
         }
         public void SendMessage(string text) {
+           text = a.GetResult(text);
             using (WebClient web = new WebClient())
             {
                 NameValueCollection collection = new NameValueCollection();

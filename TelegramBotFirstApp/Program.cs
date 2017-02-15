@@ -16,8 +16,8 @@ namespace TelegramBotFirstApp
         {
             Telegram Tr = new Telegram();
             Tr.ResponseReceived += Tr_ResponseReceived;
-            //Thread th = new Thread(Tr.GetUpdates);
-            //Tr.GetUpdates();
+            Thread th = new Thread(Tr.GetUpdates);
+            Tr.GetUpdates();
             Console.ReadKey();
         }
         private static void Tr_ResponseReceived(ParameterResponse e)
