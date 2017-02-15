@@ -22,7 +22,7 @@ namespace TelegramBotFirstApp
         }
         private static void Tr_ResponseReceived(ParameterResponse e)
         {
-            Console.WriteLine("{0} {1}: {2}   chatID:{3}", e.name, e.FirstName, e.message, e.chatID);
+            Console.WriteLine("{0} {1}: {2}  send: {3}  chatID: {4}", e.name, e.FirstName, e.message,e.RefMes, e.chatID);
         }
     }
     

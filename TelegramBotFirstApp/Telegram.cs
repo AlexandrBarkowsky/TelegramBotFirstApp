@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using SimpleJSON;
 using System.Net;
 using System.Collections.Specialized;
 
 namespace TelegramBotFirstApp
 {
+    public class ParameterResponse
+    {
+        public string name;
+        public string FirstName;
+        public string message;
+        public string chatID;
+        public string RefMes;
+    }
     class Telegram
     {
         int LastUpdateID = 0;
@@ -16,8 +24,9 @@ namespace TelegramBotFirstApp
         private static string LINK = "https://api.telegram.org/bot";
         public event Response ResponseReceived; // событие для ответа
         ParameterResponse e = new ParameterResponse();
-        public YandexAPI a = new YandexAPI();
-        
+        YandexAPI a = new YandexAPI();
+        YandexResponse lol = new YandexResponse();
+
         public void GetUpdates()
         {
             while (true)
@@ -42,10 +51,8 @@ namespace TelegramBotFirstApp
                         else { SendMessage(e.message); }
                     }
                 }
-                ResponseReceived(e);
             }
         }
-        //test class
         public void GetTime()
         {
             using (WebClient web = new WebClient())
@@ -60,9 +67,9 @@ namespace TelegramBotFirstApp
         public void SendMessage(string text) {
             try
             {
-                string lol = a.GetResult(text);
-                //not worked String.NullorEmpty
-                if (String.IsNullOrEmpty(lol))
+                
+                lol = (YandexResponse)a.GetResult(text);
+                if (String.IsNullOrEmpty(lol.text))
                 {
                     throw new Exception("Error: null or empty parametr");
                 }
@@ -70,9 +77,11 @@ namespace TelegramBotFirstApp
                 {
                     NameValueCollection collection = new NameValueCollection();
                     collection.Add("chat_id", e.chatID.ToString());
-                    collection.Add("text", lol);
+                    collection.Add("text", lol.text);
                     web.UploadValues(LINK + _token + "/sendMessage", collection);
+                    e.RefMes = lol.text;
                 }
+                ResponseReceived(e);
             }
             catch (Exception ex)
             {
@@ -80,11 +89,5 @@ namespace TelegramBotFirstApp
             }
         }
     }
-    public class ParameterResponse
-    {
-        public string name;
-        public string FirstName;
-        public string message;
-        public string chatID;
-    }
+   
 }
