@@ -58,13 +58,25 @@ namespace TelegramBotFirstApp
             }
         }
         public void SendMessage(string text) {
-           text = a.GetResult(text);
-            using (WebClient web = new WebClient())
+            try
             {
-                NameValueCollection collection = new NameValueCollection();
-                collection.Add("chat_id", e.chatID.ToString());
-                collection.Add("text", text);
-                web.UploadValues(LINK + _token + "/sendMessage", collection);
+                string lol = a.GetResult(text);
+                //not worked String.NullorEmpty
+                if (String.IsNullOrEmpty(lol))
+                {
+                    throw new Exception("Error: null or empty parametr");
+                }
+                using (WebClient web = new WebClient())
+                {
+                    NameValueCollection collection = new NameValueCollection();
+                    collection.Add("chat_id", e.chatID.ToString());
+                    collection.Add("text", lol);
+                    web.UploadValues(LINK + _token + "/sendMessage", collection);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

@@ -28,7 +28,6 @@ namespace TelegramBotFirstApp
                     {
                         throw new Exception("Что то случилось я YandexAPI");
                     }
-                    Console.WriteLine(val);
                     return result;
                 } 
             }
